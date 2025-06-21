@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Composição Corporal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Calculadora de Composição Corporal</h1>
+
+    <form id="form-comp">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" placeholder="Digite seu nome" required />
+
+      <label for="idade">Idade:</label>
+      <input type="number" id="idade" placeholder="Exemplo: 25" required />
+
+      <label for="sexo">Sexo:</label>
+      <select id="sexo" required>
+        <option value="">Selecione</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+      </select>
+
+      <label for="peso">Peso (kg):</label>
+      <input type="number" id="peso" placeholder="Exemplo: 70" step="0.1" required />
+
+      <label for="cintura">Cintura (cm):</label>
+      <input type="number" id="cintura" placeholder="Exemplo: 80" step="0.1" required />
+
+      <label for="quadril">Quadril (cm):</label>
+      <input type="number" id="quadril" placeholder="Exemplo: 100" step="0.1" required />
+
+      <label for="altura">Altura (cm):</label>
+      <input type="number" id="altura" placeholder="Exemplo: 170" step="0.1" required />
+
+      <button type="submit">Calcular</button>
+    </form>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
