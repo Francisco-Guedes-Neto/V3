@@ -1,0 +1,67 @@
+// Tabelas constantes para homens e mulheres, jovens e idosos
+
+const constantes = {
+homem_jovem: { A: 0.41563, B: 0.00112, C: 0.03661 }, // 17 a 26 anos
+homem_idoso: { A: 0.41246, B: 0.00113, C: 0.03451 }, // acima de 27 anos
+mulher_jovem: { A: 0.41563, B: 0.00112, C: 0.03661 }, // 17 a 26 anos
+mulher_idoso: { A: 0.41246, B: 0.00113, C: 0.03451 } // acima de 27 anos
+};
+
+// Exemplo: para função que retorna tipo tabela baseado em sexo e idade
+function getTipoTabela(sexo, idade) {
+sexo = sexo.toLowerCase();
+if (sexo === 'masculino' || sexo === 'm') {
+if (idade >= 17 && idade <= 26) return 'homem_jovem';
+else if (idade > 26) return 'homem_idoso';
+}
+if (sexo === 'feminino' || sexo === 'f') {
+if (idade >= 17 && idade <= 26) return 'mulher_jovem';
+else if (idade > 26) return 'mulher_idoso';
+}
+return null; // idade fora do intervalo definido
+}
+
+// Função principal para calcular gordura percentual
+// Recebe a soma das dobras cutâneas em mm, idade, sexo, peso total em kg e se é treinado ou não
+function calcularComposicao(somaDobras, idade, sexo, pesoTotal, treinado = false) {
+// Define o tipo da tabela
+const tipo = getTipoTabela(sexo, idade);
+if (!tipo) {
+return { erro: 'Idade ou sexo fora do intervalo aceito.' };
+}
+
+// Busca as constantes A, B, C da tabela
+const { A, B, C } = constantes[tipo];
+
+// Calculo percentual de gordura (exemplo usando fórmula genérica com A,B,C)
+// Fórmula exemplo (você pode substituir pela fórmula correta da tabela):
+let gorduraPercentual = A * somaDobras - B * (somaDobras ** 2) + C * idade;
+
+// Ajuste se for treinado (exemplo, reduz percentual gordura 2%)
+if (treinado) gorduraPercentual -= 2;
+
+// Peso gordo em kg
+const pesoGordo = (gorduraPercentual / 100) * pesoTotal;
+
+// Peso magro em kg
+const pesoMagro = pesoTotal - pesoGordo;
+
+// Peso desejável: usar percentual de gordura desejado (exemplo: 15% para homem, 25% para mulher)
+let gorduraDesejada = sexo.toLowerCase().startsWith('m') ? 15 : 25;
+let pesoDesejavel = pesoMagro / (1 - gorduraDesejada / 100);
+
+// Perda de peso desejável
+const perdaPeso = pesoTotal - pesoDesejavel;
+
+return {
+gorduraPercentual: gorduraPercentual.toFixed(2),
+pesoGordo: pesoGordo.toFixed(2),
+pesoMagro: pesoMagro.toFixed(2),
+pesoDesejavel: pesoDesejavel.toFixed(2),
+perdaPeso: perdaPeso.toFixed(2)
+};
+}
+
+// Exemplo de uso
+const resultado = calcularComposicao(40, 25, 'masculino', 80, true);
+console.log(resultado);
